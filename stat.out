@@ -1,0 +1,46 @@
+  Файл: /data/mephi-2026
+  Размер: 4096      	Блоков: 16         Блок В/В: 4096   каталог
+Устройство: 8/4	Инода: 524301      Ссылки: 2
+Доступ: (2770/drwxrws---)  Uid: (    0/    root)   Gid: ( 5506/developers)
+Контекст: unconfined_u:object_r:default_t:s0
+Доступ:        2026-10-08 23:18:05.456276857 +0300
+Модифицирован: 2026-10-08 23:20:05.905654069 +0300
+Изменён:       2026-10-08 23:20:05.905654069 +0300
+Создан:        2026-10-08 23:14:13.856760991 +0300
+  Файл: /mephi-web
+  Размер: 4096      	Блоков: 8          Блок В/В: 4096   каталог
+Устройство: 8/17	Инода: 2           Ссылки: 3
+Доступ: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Контекст: system_u:object_r:httpd_sys_content_t:s0
+Доступ:        2026-10-08 23:27:19.057358589 +0300
+Модифицирован: 2026-10-08 23:27:38.727655205 +0300
+Изменён:       2026-10-08 23:27:38.727655205 +0300
+Создан:        2026-10-08 23:08:36.000000000 +0300
+# file: data/mephi-2026
+# owner: root
+# group: developers
+# flags: -s-
+user::rwx
+group::rwx
+group:curators:r-x
+mask::rwx
+other::---
+default:user::rwx
+default:group::rwx
+default:group:curators:r-x
+default:mask::rwx
+default:other::---
+
+# file: data/mephi-2026/user1.txt
+# owner: user1
+# group: developers
+user::rw-
+group::rwx	#effective:rw-
+group:curators:r-x	#effective:r--
+mask::rw-
+other::---
+
+=== SELinux context /mephi-web ===
+system_u:object_r:httpd_sys_content_t:s0 /mephi-web
+=== SELinux context index.html ===
+unconfined_u:object_r:httpd_sys_content_t:s0 /mephi-web/index.html

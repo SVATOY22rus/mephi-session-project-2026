@@ -1,0 +1,215 @@
+    1  findmnt /mephi-web
+    2  lsblk -f
+    3  df -h /mephi-web
+    4  sudo systemctl enable --now nginx
+    5  sudo systemctl status nginx --no-pager
+    6  sudo journalctl -u nginx -b > ~/journalctl.out
+    7  curl -I http://localhost/
+    8  findmnt /mephi-web
+    9  systemctl is-active nginx
+   10  sudo mkdir -p /data/mephi-2026
+   11  sudo groupadd -g 4444 curators
+   12  sudo useradd -u 5501 user1
+   13  sudo useradd -u 5502 user2
+   14  sudo useradd -u 5503 user3
+   15  sudo useradd curator1
+   16  sudo useradd curator2
+   17  sudo groupadd developers
+   18  sudo usermod -aG developers user1
+   19  sudo usermod -aG developers user2
+   20  sudo usermod -aG developers user3
+   21  sudo usermod -aG curators curator1
+   22  sudo usermod -aG curators curator2
+   23  id user1
+   24  id user2
+   25  id user3
+   26  id curator1
+   27  id curator2
+   28  getent group curators
+   29  getent group developers
+   30  sudo dnf install -y acl
+   31  sudo chown root:developers /data/mephi-2026
+   32  sudo chmod 2770 /data/mephi-2026
+   33  sudo setfacl -m g:curators:rx /data/mephi-2026
+   34  sudo setfacl -d -m u::rwx,g::rwx,g:curators:r-x,o::---,m::rwx /data/mephi-2026
+   35  getfacl /data/mephi-2026
+   36  sudo setfacl -m g:curators:rx /data/mephi-2026
+   37  sudo -u user1 sh -c 'echo "file from user1" > /data/mephi-2026/user1.txt'
+   38  sudo -u user2 sh -c 'echo "file from user2" > /data/mephi-2026/user2.txt'
+   39  ls -la /data/mephi-2026
+   40  getfacl /data/mephi-2026/user1.txt
+   41  sudo ls -la /data/mephi-2026
+   42  sudo getfacl /data/mephi-2026
+   43  sudo getfacl /data/mephi-2026/user1.txt
+   44  sudo -u user1 cat /data/mephi-2026/user2.txt
+   45  sudo -u user2 cat /data/mephi-2026/user1.txt
+   46  sudo -u user3 cat /data/mephi-2026/user1.txt
+   47  sudo -u user2 sh -c 'echo "modified by user2" >> /data/mephi-2026/user1.txt'
+   48  sudo -u curator1 cat /data/mephi-2026/user1.txt
+   49  sudo -u curator2 cat /data/mephi-2026/user2.txt
+   50  sudo -u curator1 sh -c 'echo "forbidden" >> /data/mephi-2026/user1.txt'
+   51  sudo -u curator1 touch /data/mephi-2026/curator.txt
+   52  sudo -u user3 sh -c 'echo "file from user3" > /data/mephi-2026/user3.txt'
+   53  sudo getfacl /data/mephi-2026/user3.txt
+   54  sudo stat /data/mephi-2026 > ~/stat.out
+   55  sudo stat /mephi-web >> ~/stat.out
+   56  sudo getfacl /data/mephi-2026 >> ~/stat.out
+   57  sudo getfacl /data/mephi-2026/user1.txt >> ~/stat.out
+   58  sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+   59  getcap /usr/sbin/tcpdump
+   60  getcap /usr/sbin/tcpdump > ~/getcap.out
+   61  sudo -u user1 tcpdump -D
+   62  sudo -u user1 timeout 5 tcpdump -c 1 -i lo
+   63  getenforce
+   64  getenforce > ~/getenforce.out
+   65  sudo dnf install -y policycoreutils-python-utils
+   66  command -v semanage
+   67  sudo semanage fcontext -a -t httpd_sys_content_t '/mephi-web(/.*)?'
+   68  sudo restorecon -RFv /mephi-web
+   69  ls -Zd /mephi-web
+   70  echo 'SELinux test' | sudo tee /mephi-web/index.html
+   71  sudo restorecon -v /mephi-web/index.html
+   72  ls -Z /mephi-web/index.html
+   73  sudo cp -a /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+   74  sudo grep -nE 'root|server_name|listen' /etc/nginx/nginx.conf
+   75  sudo vi /etc/nginx/nginx.conf
+   76  [200~
+   77      sendfile            on;
+   78      tcp_nopush          on;
+   79      keepalive_timeout   65;
+   80      types_hash_max_size 4096;
+   81      include             /etc/nginx/mime.types;
+   82      default_type        application/octet-stream;
+   83      # Load modular configuration files from the /etc/nginx/conf.d directory.
+   84      # See http://nginx.org/en/docs/ngx_core_module.html#include
+   85      # for more information.
+   86      include /etc/nginx/conf.d/*.conf;
+   87          # Load configuration files for the default server block.
+   88          include /etc/nginx/default.d/*.conf;
+   89      }
+   90  # Settings for a TLS enabled server.
+   91  #
+   92  #    server {
+   93  #        listen       443 ssl;
+   94  #        listen       [::]:443 ssl;
+   95  #        http2        on;
+   96  #        server_name  _;
+   97  #        root         /usr/share/nginx/html;
+   98  #
+   99  #        ssl_certificate "/etc/pki/nginx/server.crt";
+  100  #        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+  101  #        ssl_session_cache shared:SSL:1m;
+  102  #        ssl_session_timeout  10m;
+  103  #        ssl_ciphers HIGH:!aNULL:!MD5;
+  104  #        ssl_prefer_server_ciphers on;
+  105  #
+  106  #        # Load configuration files for the default server block.
+  107  #        include /etc/nginx/default.d/*.conf;
+  108  #    }
+  109  }
+  110  ddsawqqe sdadwadw
+  111  ~sudo dnf install -y nano
+  112  sudo dnf install -y nano
+  113  sudo nano /etc/nginx/nginx.conf
+  114  sudo nginx -t
+  115  sudo systemctl reload nginx
+  116  curl http://localhost/
+  117  sudo grep -nE '^[[:space:]]*root|^[[:space:]]*index' /etc/nginx/nginx.conf
+  118  ls -Zd /mephi-web
+  119  ls -Z /mephi-web/index.html
+  120  echo 'Hello from Student: 376030' | sudo tee /mephi-web/index.html
+  121  sudo restorecon -v /mephi-web/index.html
+  122  sudo cat /mephi-web/index.html
+  123  curl http://localhost/
+  124  curl http://localhost/ > ~/curl.out
+  125  cat ~/curl.out
+  126  sudo journalctl -u nginx -b > ~/journalctl.out
+  127  getenforce > ~/getenforce.out
+  128  sudo stat /data/mephi-2026 > ~/stat.out
+  129  sudo stat /mephi-web >> ~/stat.out
+  130  sudo getfacl /data/mephi-2026 >> ~/stat.out
+  131  sudo getfacl /data/mephi-2026/user1.txt >> ~/stat.out
+  132  sudo usermod -s /sbin/nologin curator1
+  133  sudo usermod -s /sbin/nologin curator2
+  134  getent passwd curator1 curator2
+  135  curl -sS http://localhost/ > ~/curl.out
+  136  cat ~/curl.out
+  137  grep -nE '^[[:space:]]*minlen[[:space:]]*=' /etc/security/pwquality.conf
+  138  echo 'minlen = 12' | sudo tee -a /etc/security/pwquality.conf
+  139  grep -n 'minlen' /etc/security/pwquality.conf
+  140  grep -nE '^[[:space:]]*minlen[[:space:]]*=' /etc/security/pwquality.conf
+  141  sudo cp /etc/security/pwquality.conf ~/pwquality.conf
+  142  grep -nE '^PASS_MAX_DAYS' /etc/login.defs
+  143  sudo sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS   90/' /etc/login.defs
+  144  for user in user1 user2 user3 curator1 curator2; do     sudo chage -M 90 "$user"; done
+  145  for user in user1 user2 user3 curator1 curator2; do     echo "=== $user ===";     sudo chage -l "$user" | grep 'Maximum number'; done
+  146  sudo chage -l user1
+  147  for user in user1 user2 user3 curator1 curator2; do     echo "=== $user ===";     sudo chage -l "$user"; done
+  148  grep -n 'PASS_MAX_DAYS' /etc/login.defs
+  149  sudo cp /etc/passwd ~/passwd
+  150  sudo cp /etc/shadow ~/shadow
+  151  sudo cp /etc/group ~/group
+  152  sudo cp /etc/fstab ~/fstab
+  153  sudo cp /etc/security/pwquality.conf ~/pwquality.conf
+  154  sudo cp /etc/login.defs ~/login.defs
+  155  history > ~/history.out
+  156  mkdir -p ~/mephi-session-project-2026
+  157  cp ~/history.out    ~/ping.out    ~/dnf.out    ~/stat.out    ~/journalctl.out    ~/getcap.out    ~/getenforce.out    ~/curl.out    ~/fstab    ~/passwd    ~/shadow    ~/group    ~/pwquality.conf    ~/login.defs    ~/mephi-session-project-2026/
+  158  ls -lh ~/mephi-session-project-2026
+  159  ls -l ~/shadow
+  160  sudo cp /etc/shadow ~/mephi-session-project-2026/shadow
+  161  sudo chown boslk:boslk ~/mephi-session-project-2026/shadow
+  162  sudo chmod 600 ~/mephi-session-project-2026/shadow
+  163  ls -l ~/mephi-session-project-2026/shadow
+  164  head -n 3 ~/mephi-session-project-2026/shadow
+  165  cp ~/passwd ~/mephi-session-project-2026/passwd
+  166  cp ~/group ~/mephi-session-project-2026/group
+  167  cp ~/pwquality.conf ~/mephi-session-project-2026/pwquality.conf
+  168  cp ~/login.defs ~/mephi-session-project-2026/login.defs
+  169  cd ~/mephi-session-project-2026
+  170  ls -lh
+  171  cat curl.out
+  172  cat getenforce.out
+  173  cat getcap.out
+  174  grep -n 'MEPHI_WEB' fstab
+  175  findmnt /mephi-web
+  176  for user in user1 user2 user3; do     awk -F: -v u="$user" '$1 == u {print $1, "UID=" $3, "GID=" $4}' passwd; done
+  177  awk -F: '$1 == "curators" {print "group=" $1, "GID=" $3, "members=" $4}' group
+  178  grep -E '^(curator1|curator2):' passwd
+  179  for user in user1 user2 user3 curator1 curator2; do     awk -F: -v u="$user" '$1 == u {print $1 ": PASS_MAX_DAYS=" $5}' shadow; done
+  180  grep -nE '^[[:space:]]*minlen[[:space:]]*=' pwquality.conf
+  181  grep -E 'File:|Access:|Uid:|Gid:' stat.out
+  182  grep -nE 'data/mephi-2026|mephi-web' stat.out
+  183  grep -nE 'curators|developers|other::---|default:' stat.out
+  184  ls -Zd /mephi-web
+  185  head -n 10 journalctl.out
+  186  grep -E 'nginx|Started|starting|configuration' journalctl.out
+  187  sudo journalctl -u nginx -b --no-pager | diff -u - journalctl.out
+  188  cat > README.md <<'EOF'
+# MEPHI Session Project 2026
+
+Номер зачётной книжки: 376030
+
+## Основные результаты
+
+- Hostname: `mephi-2026.domain.local`
+- SELinux: `Enforcing`
+- Web server: nginx
+- Web root: `/mephi-web`
+- Storage: ext4, label `MEPHI_WEB`
+- Project directory: `/data/mephi-2026`
+- Developers: `user1`, `user2`, `user3`
+- Curators: `curator1`, `curator2`
+- Password maximum age: 90 days
+- Password minimum length: 12 characters
+- tcpdump configured with file capabilities
+
+## Web test
+
+```text
+Hello from Student: 376030
+```
+EOF
+
+  189  cat README.md
+  190  history > history.out
